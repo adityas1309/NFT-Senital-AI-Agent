@@ -1,4 +1,6 @@
 import express from "express";
+import { getLiveTweets } from './utils/twitter_sentiment.js';
+import { getFakeTweets } from './utils/fake_tweets.js';
 import axios from "axios";
 import { exec } from "child_process";
 import cors from "cors";
@@ -83,31 +85,27 @@ export const getTelegramMessages = async () => {
 };
 
 // 🛠 Get Twitter Sentiment Analysis
-const getTwitterSentiment = (nftToken) => {
-  return new Promise((resolve, reject) => {
-    exec(`python ./utils/twitter_sentiment.py ${nftToken}`, (error, stdout, stderr) => {
-      if (error) {
-        console.error("❌ Twitter Sentiment Error:", stderr);
-        return reject("Twitter Sentiment Fetch Failed");
-      }
+const getTwitterSentiment = async (nftToken) => {
+  try {
+    const liveTweets = await getLiveTweets(nftToken);
+    const parsed = JSON.parse(liveTweets);
 
-      try {
-        const twitterData = JSON.parse(stdout);
-        resolve(twitterData);
-      } catch (err) {
-        console.warn("⚠️ Failed to parse Twitter response. Falling back to AI tweets.");
+    // If no data, fall back
+    if (!parsed || !Array.isArray(parsed) || parsed.length === 0) {
+      throw new Error("No tweets found or parsing failed");
+    }
 
-        // ✅ If Twitter fails, fetch fake tweets using Groq AI
-        exec(`python ./utils/fake_tweets.py ${nftToken}`, (err, fakeTweets) => {
-          if (err) {
-            console.error("❌ Groq AI Error:", err);
-            return reject("Failed to generate fake tweets.");
-          }
-          resolve(JSON.parse(fakeTweets));
-        });
-      }
-    });
-  });
+    return parsed;
+  } catch (err) {
+    console.warn("⚠️ Twitter fetch failed, falling back to AI-generated tweets.");
+    try {
+      const fallbackTweets = await getFakeTweets(nftToken);
+      return JSON.parse(fallbackTweets);
+    } catch (fallbackError) {
+      console.error("❌ Groq AI fallback also failed:", fallbackError);
+      throw new Error("Failed to retrieve both live and fake tweets.");
+    }
+  }
 };
 
 // 🛠 AI Analysis using Groq API
