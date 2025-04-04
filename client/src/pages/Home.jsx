@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AnalyticsDashboard from "../components/AnalyticsDash/AnalyticsDashboard";
 import { FiHome, FiDollarSign, FiActivity, FiSettings, FiMenu } from "react-icons/fi";
 import Navbar from "../components/Navbar";
 
