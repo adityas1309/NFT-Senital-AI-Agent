@@ -15,11 +15,11 @@ contract DummyNFTTrader {
     event NFTSold(address indexed seller, string nftSymbol, uint256 price);
 
     constructor() {
-        balances[msg.sender] = 1000 ether; // Assign 1000 Fake AVAX to contract deployer
+        balances[msg.sender] = 2 ether; // Assign 1000 Fake AVAX to contract deployer
     }
 
     function simulateBuy(string memory nftSymbol) public {
-        require(balances[msg.sender] >= 10 ether, "Not enough AVAX to buy");
+        require(balances[msg.sender] >= 1 ether, "Not enough AVAX to buy");
 
         uint256 price = (uint256(keccak256(abi.encodePacked(nftSymbol))) % 5 + 1) * 1 ether; // Random price between 1-5 AVAX
         balances[msg.sender] -= price; // Deduct price
