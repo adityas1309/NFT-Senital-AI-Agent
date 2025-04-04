@@ -1,7 +1,11 @@
-const express = require("express");
-const axios = require("axios");
+import express from "express";
+import axios from "axios";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const router = express.Router();
-require("dotenv").config();
+
 
 const NFTGO_API_KEY = process.env.NFTGO_API_KEY;
 const BASE_URL = "https://data-api.nftgo.io/eth/v1";
@@ -98,4 +102,5 @@ router.get("/market-volume", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
+
