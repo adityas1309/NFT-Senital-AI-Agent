@@ -11,7 +11,7 @@ const NFTGoAutoTrade = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get("http://localhost:5000/api/auto-trade-nftgo");
+      const response = await axios.get("https://nft-senital-ai-agent-mx3d.vercel.app/api/auto-trade-nftgo");
       setTradeData(response.data);
     } catch (err) {
       setError("Failed to fetch trade decision.");

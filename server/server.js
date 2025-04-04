@@ -298,9 +298,9 @@ app.get("/api/auto-trade-nftgo", async (req, res) => {
     let topCollections = [], marketVolume = {}, whaleActivity = {};
     try {
       const [topCollectionsRes, marketVolumeRes, whaleActivityRes] = await Promise.all([
-        axios.get("http://localhost:5000/api/analytics/top-collections"),
-        axios.get("http://localhost:5000/api/analytics/market-volume"),
-        axios.get("http://localhost:5000/api/analytics/whale-activity")
+        axios.get("https://nft-senital-ai-agent-mx3d.vercel.app/api/analytics/top-collections"),
+        axios.get("https://nft-senital-ai-agent-mx3d.vercel.app/api/analytics/market-volume"),
+        axios.get("https://nft-senital-ai-agent-mx3d.vercel.app/api/analytics/whale-activity")
       ]);
 
       topCollections = topCollectionsRes.data.slice(0, 5);

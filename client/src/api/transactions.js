@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api"; // Update if needed
+const API_URL = "https://nft-senital-ai-agent-mx3d.vercel.app/api"; // Update if needed
 
 // Fetch recent transactions
 export const fetchRecentTransactions = async () => {
