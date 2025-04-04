@@ -4,13 +4,46 @@ import { exec } from "child_process";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./db.js";
+import { buyNFT, sellNFT } from "./utils/buy_nft.js";
+
+import Transaction from "./models/Transaction.js";
+
+import analyticsRoutes from "./routes/analyticsRoutes.js";
 dotenv.config();
 connectDB();
+
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
 const app = express();
 app.use(express.json());
 
 app.use(cors()); 
+
+
+const getAIAnalysis = async (message) => {
+  if (!GROQ_API_KEY) return "AI analysis not available (missing API key)";
+
+  try {
+    const response = await axios.post(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        model: "llama3-8b-8192",
+        messages: [{ role: "user", content: message }],
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${GROQ_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data.choices[0].message.content;
+  } catch (error) {
+    console.error("❌ Error with Groq AI:", error.response?.data || error.message);
+    return "AI analysis failed";
+  }
+};
+
 
 app.get("/api/transactions", async (req, res) => {
     try {

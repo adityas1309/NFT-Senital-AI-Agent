@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+
+import RecentTransactions from "../components/RecentTransactions";
 import AnalyticsDashboard from "../components/AnalyticsDash/AnalyticsDashboard";
 import { FiHome, FiDollarSign, FiActivity, FiSettings, FiMenu } from "react-icons/fi";
 import Navbar from "../components/Navbar";
@@ -42,6 +44,7 @@ const Home = () => {
         
         <main className="flex-1 overflow-y-auto p-2">
           
+        {activeSection === "transactions" && <RecentTransactions />}
           {activeSection === "live-trading" && <AnalyticsDashboard />}
         </main>
       </div>
