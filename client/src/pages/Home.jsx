@@ -40,6 +40,8 @@ const Home = () => {
 
         
         <main className="flex-1 overflow-y-auto p-2">
+          
+          {activeSection === "live-trading" && <AnalyticsDashboard />}
         </main>
       </div>
     </div>
