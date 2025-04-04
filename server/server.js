@@ -439,6 +439,9 @@ aiDecision.forEach(decision => {
 
 app.use("/api/analytics", analyticsRoutes);
 
+app.get("/api/hello", (req, res) => {
+  res.json({ message: "Hello from Express on Vercel!" });
+});
 
 const PORT = process.env.PORT || 5000;
 if (require.main === module) {
