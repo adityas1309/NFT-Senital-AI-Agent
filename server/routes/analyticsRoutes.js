@@ -6,8 +6,8 @@ dotenv.config();
 
 const router = express.Router();
 
-
-const NFTGO_API_KEY = process.env.NFTGO_API_KEY;
+const NFTGO_API_KEY1 = process.env.NFTGO_API_KEY1;
+const NFTGO_API_KEY2 = process.env.NFTGO_API_KEY2;
 const BASE_URL = "https://data-api.nftgo.io/eth/v1";
 
 const convertTimestamps = (timestamps) => {
@@ -36,7 +36,7 @@ router.get("/whale-activity", async (req, res) => {
       },
       headers: {
         accept: "application/json",
-        "X-API-KEY": NFTGO_API_KEY,
+        "X-API-KEY": NFTGO_API_KEY1,
       },
     };
 
@@ -63,7 +63,7 @@ router.get("/whale-activity", async (req, res) => {
 router.get("/top-collections", async (req, res) => {
   try {
     const response = await axios.get(`${BASE_URL}/market/rank/nft/24h?by=price&category=ALL&offset=0&limit=10`, {
-      headers: { "X-API-KEY": NFTGO_API_KEY },
+      headers: { "X-API-KEY": NFTGO_API_KEY2 },
     });
     console.log("🔹 AlI Raw Response:", response.data);
     if (!response.data || !response.data.nfts) {
@@ -85,7 +85,7 @@ router.get("/market-volume", async (req, res) => {
     const url = `${BASE_URL}/market/chart/volume?start_time=${encodeURIComponent(start_time)}&end_time=${encodeURIComponent(end_time)}&unit=USD`;
 
     const response = await axios.get(url, {
-      headers: { "X-API-KEY": NFTGO_API_KEY },
+      headers: { "X-API-KEY": NFTGO_API_KEY2 },
     });
 
     // Convert timestamps
