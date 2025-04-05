@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://nft-senital-ai-agent-mx3d.vercel.app";
 
 const useAnalyticsData = () => {
   const [whaleActivity, setWhaleActivity] = useState([]);
