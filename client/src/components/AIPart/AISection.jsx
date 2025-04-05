@@ -39,7 +39,7 @@ const AISection = () => {
     if (!tradeData) {
       fetchData();
     }
-    const interval = setInterval(fetchData, 10000); // 🔄 Refresh every 10s
+    const interval = setInterval(fetchData, 180000); // 🔄 Refresh every 10s
     return () => clearInterval(interval);
   }, []);
 
